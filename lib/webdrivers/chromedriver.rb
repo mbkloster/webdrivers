@@ -109,6 +109,20 @@ module Webdrivers
         "#{base_url}/#{driver_version}/chromedriver_#{driver_filename(driver_version)}.zip"
       end
 
+      def download_url
+        return @download_url if @download_url
+
+        driver_version = if required_version == EMPTY_VERSION
+          latest_version
+        else
+          normalize_version(required_version)
+        end
+        filename = driver_filename(driver_version)
+        url = "#{base_url}/#{driver_version}/chromedriver_#{filename}.zip"
+        Webdrivers.logger.debug "chromedriver URL: #{url}"
+        @download_url = url
+      end
+
       def driver_filename(driver_version)
         if System.platform == 'win' || System.wsl_v1?
           'win32'

@@ -123,7 +123,11 @@ module Webdrivers
       end
 
       def download_url
-        @download_url ||= direct_url(download_version).tap { |url| Webdrivers.logger.debug "#{file_name} URL: #{url}" }
+        @download_url ||= if required_version == EMPTY_VERSION
+          downloads[downloads.keys.max]
+        else
+          downloads[normalize_version(required_version)]
+        end
       end
 
       def exists?
