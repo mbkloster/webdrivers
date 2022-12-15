@@ -34,7 +34,7 @@ module Webdrivers
       #
       # @return [String]
       def base_url
-        'https://api.github.com/repos/seleniumhq/selenium/releases'
+        'https://selenium-release.storage.googleapis.com/'
       end
 
       private
