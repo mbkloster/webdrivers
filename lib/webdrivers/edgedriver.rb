@@ -89,6 +89,20 @@ module Webdrivers
         end
       end
 
+      def download_url
+        return @download_url if @download_url
+
+        driver_version = if required_version == EMPTY_VERSION
+          latest_version
+        else
+          normalize_version(required_version)
+        end
+        filename = driver_filename(driver_version)
+        url = "#{base_url}/#{driver_version}/edgedriver_#{filename}.zip"
+        Webdrivers.logger.debug "msedgedriver URL: #{url}"
+        @download_url = url
+      end
+
       def direct_url(driver_version)
         "#{base_url}/#{driver_version}/edgedriver_#{driver_filename(driver_version)}.zip"
       end
