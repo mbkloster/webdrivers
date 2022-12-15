@@ -57,9 +57,9 @@ module Webdrivers
       end
 
       def download_manifest
-        json = Network.get(base_url)
-        all_assets = JSON.parse(json).map { |release| release['assets'] }.flatten
-        all_assets.select { |asset| asset['name'].include?('IEDriverServer_Win32') }
+        doc = Nokogiri::XML.parse(Network.get(base_url))
+        items = doc.css('Key').collect(&:text)
+        items.select { |item| item.include?('IEDriverServer_Win32') }
       end
     end
   end
